@@ -7,7 +7,7 @@ const coinbase = new Client({ apiKey, apiSecret, version: '2017-08-07' });
 function checkPrice(currency, threshold, recipients) {
   coinbase.getBuyPrice({currencyPair: `${currency}-USD`}, (err, res) => {
     const price = res.data.amount;
-    if (parseFloat(price) < parseFloat(threshold)) {
+    if (parseFloat(price) <= parseFloat(threshold)) {
       recipients.forEach(recipient => { notify(currency, price, recipient); });
     }
   });
@@ -19,6 +19,6 @@ function notify(currency, price, recipient) {
   sendText(recipient, message, (err) => { console.log(err); });
 }
 
-notifications.forEach(({currency, threshold, recipients}) => {
-  setInterval(checkPrice, 10000, currency, threshold, recipients);
+notifications.forEach(({currency, threshold, interval, recipients}) => {
+  setInterval(checkPrice, interval, currency, threshold, recipients);
 });
