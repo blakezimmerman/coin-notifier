@@ -1,0 +1,11 @@
+{
+  "name": "coin-notifier",
+  "version": "1.0.0",
+  "description": "A web server that will text you when selected cryptocurrencies dip below a certain price on coinbase",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Blake Zimmerman",
+  "license": "ISC"
+}
