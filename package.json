@@ -7,5 +7,9 @@
     "start": "node index.js"
   },
   "author": "Blake Zimmerman",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "coinbase": "^2.0.6",
+    "nodemailer": "^4.4.1"
+  }
 }
