@@ -1,6 +1,6 @@
 # Coin Notifier
 
-This is a simple Node.js server that will notify you when certain cryptocurrencies on Coinbase dip below a specified threshold.
+This is a simple Node.js server that will send you an SMS message when specified cryptocurrencies on Coinbase dip below or exceed a specified threshold.
 
 ## How to Use
 
@@ -13,6 +13,7 @@ To run this server, you need to provide it with a `config.json` file that has th
   "notifications": [
     {
       "currency": "Currency you want to watch e.g. ETH",
+      "compareBy": "How to compare current price to threshold (lt or gt)"
       "threshold": "Price in USD you want to be notified at",
       "interval": "Time interval in milliseconds to check Coinbase"
       "recipients": [
