@@ -1,6 +1,6 @@
 # Coin Notifier
 
-This is a simple Node.js server that will send you an SMS message when specified cryptocurrencies on Coinbase dip below or exceed a specified threshold.
+This is a simple Node.js server that will send you an SMS message when specified cryptocurrencies on CoinMarketCap dip below or exceed a specified threshold.
 
 ## How to Use
 
@@ -8,14 +8,14 @@ To run this server, you need to provide it with a `config.json` file that has th
 
 ```
 {
-  "apiKey": "Your Coinbase API Key",
-  "apiSecret": "Your Coinbase API Secret",
   "notifications": [
     {
-      "currency": "Currency you want to watch e.g. ETH",
-      "compareBy": "How to compare current price to threshold (lt or gt)"
-      "threshold": "Price in USD you want to be notified at",
-      "interval": "Time interval in milliseconds to check Coinbase"
+      "currency": "Currency you want to watch e.g. bitcoin, ethereum",
+      "thresholdType": "What data you want to monitor (price_usd, percent_change_1h, percent_change_24h, or percent_change_7d)",
+      "compareBy": "How to compare current value to threshold (lt or gt)"
+      "threshold": "Value you want to be notified at",
+      "apiInterval": "Time interval in milliseconds to check CoinMarketCap"
+      "smsRate": "Max rate in milliseconds to send SMS notifications"
       "recipients": [
         {
           "number": "Phone number to notify",
@@ -25,14 +25,42 @@ To run this server, you need to provide it with a `config.json` file that has th
     }
   ],
   "email": {
-    "service": "Your email service e.g. gmail",
+    "service": "Your email service e.g. gmail, aol, yahoo",
     "user": "Your email address",
     "password": "Your email password"
   }
 }
 ```
 
-Then you must install the dependencies using `npm install`.
+For example, to check the price of Ethereum every 15 minutes and send notifications at a max rate of once an hour when it drops below $1000, the `config.json` might look like this:
+
+```
+{
+  "notifications": [
+    {
+      "currency": "ethereum",
+      "thresholdType": "price_usd",
+      "compareBy": "lt",
+      "threshold": "1000",
+      "apiInterval": 900000,
+      "smsRate": 3600000,
+      "recipients": [
+        {
+          "number": "1234567890",
+          "provider": "AT&T"
+        }
+      ]
+    }
+  ],
+  "email": {
+    "service": "gmail",
+    "user": "myemail@gmail.com",
+    "password": "secretpassword"
+  }
+}
+```
+
+Next, you must install the dependencies using `npm install`.
 
 Finally, you can start the server using `npm start`.
 

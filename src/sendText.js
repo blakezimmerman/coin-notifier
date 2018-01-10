@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
-const providers = require('./providers.json');
-const { email } = require('./config');
+const providers = require('../providers.json');
+const { email } = require('../config');
 
 const transporter = nodemailer.createTransport({
   service: email.service,
