@@ -11,9 +11,13 @@ To run this server, you need to provide it with a `config.json` file that has th
   "notifications": [
     {
       "currency": "Currency you want to watch e.g. bitcoin, ethereum",
-      "thresholdType": "What data you want to monitor (price_usd, percent_change_1h, percent_change_24h, or percent_change_7d)",
-      "compareBy": "How to compare current value to threshold (lt or gt)"
-      "threshold": "Value you want to be notified at",
+      "thresholds": [
+        {
+          "thresholdType": "Data to monitor (price_usd, percent_change_1h, percent_change_24h, or percent_change_7d)",
+          "compareBy": "How to compare current value to threshold (lt or gt)"
+          "threshold": "Value you want to be notified at",
+        }
+      ],
       "apiInterval": "Time interval in milliseconds to check CoinMarketCap"
       "smsRate": "Max rate in milliseconds to send SMS notifications"
       "recipients": [
@@ -32,16 +36,25 @@ To run this server, you need to provide it with a `config.json` file that has th
 }
 ```
 
-For example, to check the price of Ethereum every 15 minutes and send notifications at a max rate of once an hour when it drops below $1000, the `config.json` might look like this:
+For example, to check the price of Ethereum every 15 minutes and send notifications at a max rate of once an hour when it drops below $1000 or exceeds $1300, the `config.json` might look like this:
 
 ```
 {
   "notifications": [
     {
       "currency": "ethereum",
-      "thresholdType": "price_usd",
-      "compareBy": "lt",
-      "threshold": "1000",
+      "thresholds": [
+        {
+          "thresholdType": "price_usd",
+          "compareBy": "lt",
+          "threshold": "1000",
+        },
+        {
+          "thresholdType": "price_usd",
+          "compareBy": "gt",
+          "threshold": "1300",
+        }
+      ],
       "apiInterval": 900000,
       "smsRate": 3600000,
       "recipients": [

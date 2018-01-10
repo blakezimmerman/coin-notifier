@@ -3,10 +3,12 @@ const sendText = require('./sendText');
 const { throttle, passedThreshold } = require('./utils');
 const { notifications } = require('../config.json');
 
-function checkData(currency, thresholdType, compareBy, threshold, recipients, notify) {
+function checkData(currency, thresholds, recipients, notify) {
   api.getCurrency(currency).then(({data}) => {
-    passedThreshold(data[0][thresholdType], threshold, compareBy) &&
-    notify(currency, data[0], recipients);
+    thresholds.forEach(({thresholdType, compareBy, threshold}) =>
+      passedThreshold(data[0][thresholdType], threshold, compareBy) &&
+      notify(currency, data[0], recipients)
+    );
   }).catch((err) => console.log(err));
 }
 
@@ -22,7 +24,7 @@ function sendNotifications(currency, data, recipients) {
   });
 }
 
-notifications.forEach(({currency, thresholdType, compareBy, threshold, apiInterval, smsRate, recipients}) => {
+notifications.forEach(({currency, thresholds, apiInterval, smsRate, recipients}) => {
   const notify = throttle(sendNotifications, smsRate);
-  setInterval(checkData, apiInterval, currency, thresholdType, compareBy, threshold, recipients, notify);
+  setInterval(checkData, apiInterval, currency, thresholds, recipients, notify);
 });
